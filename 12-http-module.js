@@ -20,4 +20,4 @@ const server = http.createServer((req, res) => {
 })
 
 server.listen(5000)
-//if we go to the server and type localhost:5000, it will give us a page with 'Welcome to our home page'
+//if we go to the server and type "localhost:5000", it will give us a page with 'Welcome to our home page'

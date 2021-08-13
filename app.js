@@ -1,32 +1,8 @@
-//npm
-//node package manager
+//Event Loop
+//The event loop is what allows Node.js to perform non-blocking I/O operations - despite the fact that JavaScript is
+//single-threaded - by offloading operations to the system kernel whenever possible.
+//Since most modern kernels are multi-threaded, they can handle multiple operations executing in the background. 
+//When one of these operations completes, the kernel Node.js so that the appropriate callback may be added to the poll queue to
+//eventually be executed.
 
-// npm calls the resuable code a package, a package essentially is a folder that contains JavaScript code
-// modules, dependencies and npm are used interchangeably!
-// there is no quality control in npm, so there can be very bad packages
-
-// npm -global command, comes with node
-// npm --version
-
-// local dependency - use it only in this particular project
-// nmp i <packageName>
-
-//global dependency - use it in any project
-//npm install -g <packageName>
-// sudo npm install -g <packageName> (macOS)
-
-//package.json - manifest file (stores important information about our package/project)
-//manual approach - create package.json in the root, create properties etc
-// npm init (step by step, press enter to skip)
-// npm init -y (using y flag everything is set up by default)
-
-//with external packages we need to install them first before we require them unlike the built-in modules
-
-
-const _ = require('lodash')
-
-const items = [1, [2, [3, [4]]]]
-
-const newItems = _.flattenDeep(items);
-console.log(newItems);
-// [1,2,3,4] -so, basically the flattenDeep method flattens the items array and removes the nested arrays, resulting into a flattened array!
+//
