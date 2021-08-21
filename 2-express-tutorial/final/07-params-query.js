@@ -1,58 +1,47 @@
 const express = require('express')
 const app = express()
-const { products } = require('./data')
 
-app.get('/', (req, res) => {
-  res.send('<h1> Home Page</h1><a href="/api/products">products</a>')
-})
-app.get('/api/products', (req, res) => {
-  const newProducts = products.map((product) => {
-    const { id, name, image } = product
-    return { id, name, image }
-  })
+const { products } = require('./data.js')
 
-  res.json(newProducts)
-})
-app.get('/api/products/:productID', (req, res) => {
-  // console.log(req)
-  // console.log(req.params)
-  const { productID } = req.params
 
-  const singleProduct = products.find(
-    (product) => product.id === Number(productID)
-  )
-  if (!singleProduct) {
-    return res.status(404).send('Product Does Not Exist')
-  }
 
-  return res.json(singleProduct)
-})
+//query-sting parameters or URl parameters///
+//essentially that is a way for us to send small amount of information to the server using the URl
+//this information is usually used as parameters for example query database, or filter results 
+//and people who are setting up the server decide what parameters are going to accepted and what functionality
+//will depend on those values
 
-app.get('/api/products/:productID/reviews/:reviewID', (req, res) => {
-  console.log(req.params)
-  res.send('hello world')
-})
+//Colt Steele says, "Query strings are just information that we can provide to any URL or as a part of a URL that
+//usually is going to impact what we get back, and we can put more than one parameter in the querystring- for that 
+//we use "&", so an example on the frontebnd would be http://api.tvmaze.com/lookup/shows?imdb=tt4718304&color=purple"
 
 app.get('/api/v1/query', (req, res) => {
   // console.log(req.query)
-  const { search, limit } = req.query
-  let sortedProducts = [...products]
-
+  //if I type "http://localhost:5000/api/v1/query?search=a&limit=2" in the browser, req.query when console.logged 
+  //will show {search:'a', limit:'2'}
+  //so req.query will let us access the parameters!
+  const { search, limit } = req.query;
+  let sortedProduct = [...products];
   if (search) {
-    sortedProducts = sortedProducts.filter((product) => {
+    sortedProduct = sortedProduct.filter((product) => {
       return product.name.startsWith(search)
     })
+  } if (limit) {
+    sortedProduct = sortedProduct.slice(0, Number(limit))
   }
-  if (limit) {
-    sortedProducts = sortedProducts.slice(0, Number(limit))
+  if (sortedProduct < 1) {
+    // res.status(200).send('Cannot find data according to your search')
+    return res.status(200).json({ success: true, data: 'not found' })
   }
-  if (sortedProducts.length < 1) {
-    // res.status(200).send('no products matched your search');
-    return res.status(200).json({ sucess: true, data: [] })
-  }
-  res.status(200).json(sortedProducts)
+  res.status(200).json(sortedProduct)
 })
 
+
 app.listen(5000, () => {
-  console.log('Server is listening on port 5000....')
+  console.log('server is listening at port 5000........')
 })
+
+
+//When we get error in the server when we send more than one response in the same request! We can set up a conditional
+//but we cannot send two responses in the same request! So, when we are setting up a response in the if-conditional
+//we should add a return in it! 
