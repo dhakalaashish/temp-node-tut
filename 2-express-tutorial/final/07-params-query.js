@@ -22,6 +22,8 @@ app.get('/api/v1/query', (req, res) => {
   //so req.query will let us access the parameters!
   const { search, limit } = req.query;
   let sortedProduct = [...products];
+  console.log(products)
+  console.log(sortedProduct)
   if (search) {
     sortedProduct = sortedProduct.filter((product) => {
       return product.name.startsWith(search)

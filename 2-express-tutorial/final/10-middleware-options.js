@@ -1,12 +1,17 @@
+
+
 const express = require('express')
 const app = express()
-const morgan = require('morgan')
-const logger = require('./logger')
-const authorize = require('./authorize')
-//  req => middleware => res
 
-// app.use([logger, authorize])
+const morgan = require('morgan')
+
+//in Express we have a built-in middleware named static.
+
 // app.use(express.static('./public'))
+
+//third party middleware ---we have to install them!
+//one of them is morgan npm, we need to install morgan by doing "npm i morgan"
+
 app.use(morgan('tiny'))
 
 app.get('/', (req, res) => {
