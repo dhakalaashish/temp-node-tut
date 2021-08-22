@@ -51,9 +51,7 @@ const deletePerson = (req, res) => {
       .status(404)
       .json({ success: false, msg: `no person with id ${req.params.id}` })
   }
-  const newPeople = people.filter(
-    (person) => person.id !== Number(req.params.id)
-  )
+  const newPeople = people.filter((person) => person.id !== Number(req.params.id))
   return res.status(200).json({ success: true, data: newPeople })
 }
 
